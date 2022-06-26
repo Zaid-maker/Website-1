@@ -2,6 +2,7 @@ import Avatar from "@/root/components/Interface/Avatar";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { MetaTags } from "@/root/components/Header/Meta";
 import { NoDesc } from "@/root/components/Lists/NoDesc";
+import List_LongDescription from "@/root/components/BotLists/LongDesc";
 import { toast } from "react-toastify";
 import marked from "marked";
 import sanitize from "insane";
@@ -121,27 +122,7 @@ const ListPage = ({ $, list, desc }) => {
             </div>
           </div>
         </div>
-        <div className="h-full w-full col-span-9">
-          <div className="w-full text-white rounded-lg">
-            <div className="mt-5">
-              <div
-                className="text-center w-full h-auto bg-gradient-to-br from-neutral-900/90 to-neutral-900/50 rounded-lg p-6 shadow-md mx-auto"
-                id="widgets"
-              >
-                <div className="px-4 mx-auto w-auto sm:px-6 lg:px-8 lg:text-center">
-                  {!desc ? (
-                    <NoDesc />
-                  ) : (
-                    <div
-                      className="col-span-9 pt-5 lg:pt-0 w-auto"
-                      dangerouslySetInnerHTML={{ __html: desc }}
-                    />
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <List_LongDescription value={desc} />
       </div>
     </>
   );
