@@ -1,8 +1,20 @@
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { MetaTags } from "@/root/components/Header/Meta";
+import { useRouter } from "next/router";
+import Header from "@/root/components/Static/Header";
+import { NavItems } from "@/root/utils/navItems";
+import { parseUser } from "@/root/utils/parseUser";
+import { DiscordUser } from "@/root/utils/types";
+import { GetServerSideProps } from 'next';
 
-export default function Privacy({ $ }) {
+interface Props {
+  user: DiscordUser;
+}
+
+export default function Privacy(props: Props) {
+  const router = useRouter();
+  const $ = require("@/root/lang/" + (router.locale || "en"));
   const [enterLoading, setEnterLoading] = useState(false);
   const mainButton = useRef(null);
 
@@ -14,6 +26,7 @@ export default function Privacy({ $ }) {
         image="/img/logo.webp"
         name="Metro Reviews"
       />
+      <Header $={$} NavItems={NavItems} props={props} />
       <div className="overflow-hidden relative bg-background flex mx-auto items-center justify-center">
         <div className="mx-auto max-w-7xl">
           <div className="relative z-10 pb-8 bg-background sm:pb-16 md:pb-20 lg:pb-28 lg:w-full lg:max-w-2xl xl:pb-32">
@@ -232,3 +245,9 @@ export default function Privacy({ $ }) {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps<Props> = async function (ctx) {
+  const user = parseUser(ctx);
+
+  return { props: { user } };
+};

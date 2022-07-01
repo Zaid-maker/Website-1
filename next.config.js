@@ -20,6 +20,7 @@ module.exports = withPWA({
     CLIENT_SECRET: process.env.CLIENT_SECRET,
     APP_URI: process.env.APP_URI,
     JWT_SECRET: process.env.JWT_SECRET,
+    LOGOUT_PASS: process.env.LOGOUT_PASS
   },
   async redirects() {
     return [

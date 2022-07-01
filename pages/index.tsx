@@ -1,9 +1,15 @@
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 import useSWR from "swr";
 import { MetaTags } from "../components/Header/Meta";
 import { Loading } from "../components/Interface/Loading";
+import Header from "../components/Static/Header";
+import { NavItems } from "../utils/navItems";
+import { parseUser } from "../utils/parseUser";
+import { DiscordUser } from "../utils/types";
+import { GetServerSideProps } from 'next';
 
 interface lists {
   name: string;
@@ -14,7 +20,13 @@ interface lists {
   description: string;
 }
 
-export default function Index({ $, title }) {
+interface Props {
+  user: DiscordUser;
+}
+
+export default function Index(props: Props) {
+  const router = useRouter();
+  const $ = require("../lang/" + (router.locale || "en"));
   const { data: stats }: { data?: lists[] } = useSWR("list");
   const [enterLoading, setEnterLoading] = useState(false);
   const mainButton = useRef(null);
@@ -27,6 +39,8 @@ export default function Index({ $, title }) {
         image="/img/logo.webp"
         name="Metro Reviews"
       />
+      <Header $={$} NavItems={NavItems} props={props} />
+
       <div className="py-20 mb-40 max-w-3xl mx-auto">
         <p
           className="animateHeader text-4xl font-extrabold text-center text-white"
@@ -149,3 +163,9 @@ export default function Index({ $, title }) {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps<Props> = async function (ctx) {
+  const user = parseUser(ctx);
+
+  return { props: { user } };
+};

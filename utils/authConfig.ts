@@ -25,10 +25,6 @@ export const config = {
   cookieName: "$Metro_auth",
   clientId: validateEnv("CLIENT_ID"),
   clientSecret: validateEnv("CLIENT_SECRET"),
-  appUri: validateEnv("APP_URI", "http://localhost:3000", true),
-  jwtSecret: validateEnv(
-    "JWT_SECRET",
-    "dev_JIUyUXfXQT9TqdJWYxEqOeRCwaAK0D3X",
-    true
-  ),
+  appUri: validateEnv("APP_URI"),
+  jwtSecret: validateEnv("JWT_SECRET")
 } as const;

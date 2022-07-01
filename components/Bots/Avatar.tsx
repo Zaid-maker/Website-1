@@ -32,8 +32,8 @@ export default function Avatar({ id }: Props) {
                 : "https://cdn.discordapp.com/attachments/653733403841134600/985343961256300554/defaultUser.webp"
             }
             alt="Bot Logo"
-            width={24}
-            height={24}
+            width={80}
+            height={80}
             className="rounded-full h-24 w-24"
           />
         </>

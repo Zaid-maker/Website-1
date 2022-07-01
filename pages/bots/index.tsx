@@ -3,6 +3,12 @@ import { useRef, useState } from "react";
 import { MetaTags } from "@/root/components/Header/Meta";
 import { Loading } from "@/root/components/Interface/Loading";
 import Avatar from "@/root/components/Bots/Avatar";
+import { useRouter } from "next/router";
+import Header from "@/root/components/Static/Header";
+import { NavItems } from "@/root/utils/navItems";
+import { parseUser } from "@/root/utils/parseUser";
+import { DiscordUser } from "@/root/utils/types";
+import { GetServerSideProps } from 'next';
 import Link from "next/link";
 import useSWR from "swr";
 
@@ -16,7 +22,13 @@ interface bots {
   website: string;
 }
 
-export default function Bots({ $, fetch }) {
+interface Props {
+  user: DiscordUser;
+}
+
+export default function Bots(props: Props) {
+  const router = useRouter();
+  const $ = require("@/root/lang/" + (router.locale || "en"));
   const { data: bots }: { data?: bots[] } = useSWR("bots");
   const [enterLoading, setEnterLoading] = useState(false);
   const mainButton = useRef(null);
@@ -29,6 +41,7 @@ export default function Bots({ $, fetch }) {
         image="/img/logo.webp"
         name="Metro Reviews"
       />
+      <Header $={$} NavItems={NavItems} props={props} />
       <div>
         <div className="overflow-hidden relative bg-background flex mx-auto items-center justify-center">
           <div className="mx-auto max-w-7xl">
@@ -95,7 +108,7 @@ export default function Bots({ $, fetch }) {
                   />
                   <div>
                     <h1
-                      className="leading-none text-lg font-bold text-white"
+                      className="leading-none text-lg font-bold text-white inline"
                       dangerouslySetInnerHTML={{
                         __html: $.lists.info.name.replace(
                           "{list_name}",
@@ -177,3 +190,9 @@ export default function Bots({ $, fetch }) {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps<Props> = async function (ctx) {
+  const user = parseUser(ctx);
+
+  return { props: { user } };
+};

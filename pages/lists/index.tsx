@@ -4,6 +4,12 @@ import { MetaTags } from "@/root/components/Header/Meta";
 import { Loading } from "@/root/components/Interface/Loading";
 import Link from "next/link";
 import useSWR from "swr";
+import { useRouter } from "next/router";
+import Header from "../../components/Static/Header";
+import { NavItems } from "../../utils/navItems";
+import { parseUser } from "../../utils/parseUser";
+import { DiscordUser } from "../../utils/types";
+import { GetServerSideProps } from 'next';
 
 interface lists {
   name: string;
@@ -14,10 +20,16 @@ interface lists {
   description: string;
 }
 
-export default function Lists({ $ }) {
+interface Props {
+  user: DiscordUser;
+}
+
+export default function Lists(props: Props) {
   const { data: lists }: { data?: lists[] } = useSWR("list");
   const [enterLoading, setEnterLoading] = useState(false);
   const mainButton = useRef(null);
+  const router = useRouter();
+  const $ = require("../../lang/" + (router.locale || "en"));
 
   return (
     <>
@@ -27,6 +39,7 @@ export default function Lists({ $ }) {
         image="/img/logo.webp"
         name="Metro Reviews"
       />
+      <Header $={$} NavItems={NavItems} props={props} />
       <div>
         <div className="overflow-hidden relative bg-background flex mx-auto items-center justify-center">
           <div className="mx-auto max-w-7xl">
@@ -209,3 +222,9 @@ export default function Lists({ $ }) {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps<Props> = async function (ctx) {
+  const user = parseUser(ctx);
+
+  return { props: { user } };
+};

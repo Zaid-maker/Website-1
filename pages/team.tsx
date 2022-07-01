@@ -4,6 +4,12 @@ import { toast } from "react-toastify";
 import { MetaTags } from "../components/Header/Meta";
 import useSWR from "swr";
 import { useRef, useState } from "react";
+import { useRouter } from "next/router";
+import Header from "../components/Static/Header";
+import { NavItems } from "../utils/navItems";
+import { parseUser } from "../utils/parseUser";
+import { DiscordUser } from "../utils/types";
+import { GetServerSideProps } from 'next';
 
 interface team {
   username: string;
@@ -13,7 +19,14 @@ interface team {
   sudo: boolean;
   roles: string[];
 }
-export default function Team({ $ }) {
+
+interface Props {
+  user: DiscordUser;
+}
+
+export default function Team(props: Props) {
+  const router = useRouter();
+  const $ = require("../lang/" + (router.locale || "en"));
   const [enterLoading, setEnterLoading] = useState(false);
   const mainButton = useRef(null);
   const { data: team }: { data?: team[] } = useSWR("team");
@@ -26,6 +39,7 @@ export default function Team({ $ }) {
         image="/img/logo.webp"
         name="Metro Reviews"
       />
+      <Header $={$} NavItems={NavItems} props={props} />
       <div>
         <div className="overflow-hidden relative bg-background flex mx-auto items-center justify-center">
           <div className="mx-auto max-w-7xl">
@@ -106,3 +120,9 @@ export default function Team({ $ }) {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps<Props> = async function (ctx) {
+  const user = parseUser(ctx);
+
+  return { props: { user } };
+};

@@ -24,44 +24,6 @@ export default function MetroApp({ Component, pageProps }) {
   const router = useRouter();
   const locale = require("../lang/" + (router.locale || "en"));
 
-  const NavItems = [
-    {
-      link: true,
-      name: locale.navbar.home,
-      icon: "fal fa-home",
-      activeIcon: "fa fa-home",
-      href: "/",
-    },
-    {
-      link: true,
-      name: locale.navbar.github,
-      icon: "fab fa-github",
-      activeIcon: "fab fa-github",
-      href: "https://github.com/MetroReviews",
-    },
-    {
-      link: true,
-      name: locale.navbar.team,
-      icon: "fa fa-user-cog",
-      activeIcon: "fa fa-home",
-      href: "/team",
-    },
-    {
-      link: true,
-      name: locale.navbar.lists,
-      icon: "fas fa-list",
-      activeIcon: "fas fa-list",
-      href: "/lists",
-    },
-    {
-      link: true,
-      name: locale.navbar.bots,
-      icon: "fas fa-robot",
-      activeIcon: "fas fa-robot",
-      href: "/bots",
-    },
-  ];
-
   return (
     <>
       <Script
@@ -93,9 +55,6 @@ export default function MetroApp({ Component, pageProps }) {
               style={{ height: "500px" }}
             />
             <main className="transition-all duration-200 z-10 absolute inset-0 h-screen w-full mx-auto">
-              <div className="px-5">
-                <Header $={locale} NavItems={NavItems} />
-              </div>
               <div className="block px-5 md:px-0">
                 <Component $={locale} {...pageProps} />
               </div>

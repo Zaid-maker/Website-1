@@ -2,14 +2,61 @@ import Avatar from "@/root/components/Interface/Avatar";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { MetaTags } from "@/root/components/Header/Meta";
 import { useRef, useState } from "react";
+import { useRouter } from "next/router";
+import Header from "@/root/components/Static/Header";
+import { NavItems } from "@/root/utils/navItems";
+import { parseUser } from "@/root/utils/parseUser";
+import { DiscordUser } from "@/root/utils/types";
+import { GetServerSideProps } from 'next';
 import { toast } from "react-toastify";
 import url2 from 'is-url';
 
-const BotPage = ({ $, bot, long, owner, fetch, list }) => {
+interface Props {
+  user: DiscordUser;
+  owner: {
+    avatar: string;
+    username: string;
+  }
+  list: {
+    name: string;
+  }
+  fetch: {
+    avatar: string;
+  }
+  bot: {
+    bot_id: string;
+    username: string;
+    banner: string;
+    description: string;
+    long_description: string;
+    website: string;
+    invite: string;
+    owner: string;
+    extra_owners: [];
+    support: string;
+    donate: string;
+    library: string;
+    nsfw: boolean,
+    prefix: string;
+    tags: [],
+    review_note: string;
+    cross_add: boolean,
+    state: number;
+    list_source: string;
+    added_at: string;
+    reviewer: string;
+    invite_link: string;
+  }
+  long: string;
+}
+
+const BotPage = (props: Props) => {
+  const router = useRouter();
+  const $ = require("@/root/lang/" + (router.locale || "en"));
   const [copySuccess, setCopySuccess] = useState(false);
 
   const copyListId = () => {
-    if (navigator.clipboard.writeText(`${bot.list_source}`)) {
+    if (navigator.clipboard.writeText(`${props?.bot.list_source}`)) {
       setCopySuccess(true);
     } else {
       toast.error("Failed to Copy List ID");
@@ -23,30 +70,31 @@ const BotPage = ({ $, bot, long, owner, fetch, list }) => {
   return (
     <>
       <MetaTags
-        title={bot.username + " | Metro Reviews"}
+        title={props?.bot.username + " | Metro Reviews"}
         description={
-          bot.description || "View " + bot.username + "'s Page on Metro Reviews"
+          props?.bot.description || "View " + props?.bot.username + "'s Page on Metro Reviews"
         }
-        image={fetch.avatar || "/img/logo.webp"}
-        name={"Posted via: " + list.name || "Metro Reviews"}
+        image={props?.fetch.avatar || "/img/logo.webp"}
+        name={"Posted via: " + props?.list.name || "Metro Reviews"}
       />
+      <Header $={$} NavItems={NavItems} props={props} />
       <div className="overflow-hidden relative bg-background flex mx-auto items-center justify-center">
         <div className="mx-auto max-w-7xl">
           <div className="relative z-10 pb-8 bg-background sm:pb-16 md:pb-20 lg:pb-28 lg:w-full lg:max-w-2xl xl:pb-32">
-            <main className="px-4 mx-auto mt-10 w-full max-w-7xl sm:px-6 sm:mt-12 md:mt-16 lg:px-8 lg:mt-20 xl:mt-28">
+            <main className="px-4 mx-auto mt-10 w-full max-w-7xl sm:px-6 sm:mt-12 md:mt-10 lg:px-8 lg:mt-10 xl:mt-10">
               <div className="text-center">
                 <div className="border-[2.2px] w-[8rem] h-[8rem] border-white-500/50 rounded-full flex mx-auto items-center justify-center">
                   <Avatar
-                    src={fetch.avatar}
+                    src={props?.fetch.avatar}
                     className="rounded-full mx-auto inline-flex"
                     height="512"
                   />
                 </div>
                 <h1 className="inline text-4xl font-extrabold tracking-tight text-slate-300 sm:text-5xl md:text-6xl">
-                  {bot.username}
+                  {props?.bot.username}
                 </h1>
                 <p className="mt-3 text-base text-white sm:mx-auto sm:mt-5 sm:max-w-xl sm:text-lg md:mt-5 md:text-xl lg:mx-0">
-                  {bot.description}
+                  {props?.bot.description}
                 </p>
               </div>
             </main>
@@ -63,7 +111,7 @@ const BotPage = ({ $, bot, long, owner, fetch, list }) => {
                 Bot Info
               </p>
               <p className="text-white text-sm text-opacity-50 mb-5 text-center">
-                Useful Info and Links for {bot.username}
+                Useful Info and Links for {props?.bot.username}
               </p>
               <hr />
               <div className="mt-5">
@@ -75,13 +123,13 @@ const BotPage = ({ $, bot, long, owner, fetch, list }) => {
                     </div>
                     <div className="mt-2 bg-amber-600 w-full px-4 py-2 rounded-r-lg text-white">
                       <p className="line-clamp-1">
-                        {bot.state === 0
+                        {props?.bot.state === 0
                           ? "Pending Review"
-                          : bot.state === 1
+                          : props?.bot.state === 1
                           ? "Under Review"
-                          : bot.state === 2
+                          : props?.bot.state === 2
                           ? "Approved"
-                          : bot.state === 3
+                          : props?.bot.state === 3
                           ? "Denied"
                           : "No State"}
                       </p>
@@ -93,9 +141,9 @@ const BotPage = ({ $, bot, long, owner, fetch, list }) => {
                     </div>
                     <div className="mt-2 bg-amber-600 w-full px-4 py-2 rounded-r-lg text-white">
                       <p className="line-clamp-1">
-                        {bot.cross_add === true
+                        {props?.bot.cross_add === true
                           ? "Cross Add Supported"
-                          : bot.cross_add === false
+                          : props?.bot.cross_add === false
                           ? "Not Cross Add Supported"
                           : "Unknown"}
                       </p>
@@ -125,7 +173,7 @@ const BotPage = ({ $, bot, long, owner, fetch, list }) => {
                     </div>
                     <div className="mt-2 bg-amber-600 w-full px-4 py-2 rounded-r-lg text-white">
                       <p className="line-clamp-1">
-                        {bot.prefix ? bot.prefix : "Slash Commands"}
+                        {props?.bot.prefix ? props?.bot.prefix : "Slash Commands"}
                       </p>
                     </div>
                   </div>
@@ -134,7 +182,7 @@ const BotPage = ({ $, bot, long, owner, fetch, list }) => {
                       <p className="line-clamp-1">Source:</p>
                     </div>
                     <div className="mt-2 bg-amber-600 w-full px-4 py-2 rounded-r-lg text-white">
-                      <p className="line-clamp-1">{list.name}</p>
+                      <p className="line-clamp-1">{props?.list.name}</p>
                     </div>
                   </div>
                   <div className="flex items-center shadow-xl">
@@ -143,7 +191,7 @@ const BotPage = ({ $, bot, long, owner, fetch, list }) => {
                     </div>
                     <div className="mt-2 bg-amber-600 w-full px-4 py-2 rounded-r-lg text-white">
                       <p className="line-clamp-1">
-                        {new Date(bot.added_at).toLocaleString()}
+                        {new Date(props?.bot.added_at).toLocaleString()}
                       </p>
                     </div>
                   </div>
@@ -152,7 +200,7 @@ const BotPage = ({ $, bot, long, owner, fetch, list }) => {
                       <p className="line-clamp-1">Library:</p>
                     </div>
                     <div className="mt-2 bg-amber-600 w-full px-4 py-2 rounded-r-lg text-white">
-                      <p className="line-clamp-1">{bot.library}</p>
+                      <p className="line-clamp-1">{props?.bot.library}</p>
                     </div>
                   </div>
                 </div>
@@ -165,7 +213,7 @@ const BotPage = ({ $, bot, long, owner, fetch, list }) => {
                     <div className="mt-2 bg-amber-800 text-center px-4 py-2 rounded-l-lg text-white">
                       <div className="border-[2.2px] w-[3rem] h-[2rem] border-amber-500/50 rounded-full flex mx-auto items-center justify-center">
                         <Avatar
-                          src={owner.avatar}
+                          src={props?.owner.avatar}
                           className="rounded-full mx-auto inline-flex"
                           height="30"
                           width="234"
@@ -173,7 +221,7 @@ const BotPage = ({ $, bot, long, owner, fetch, list }) => {
                       </div>
                     </div>
                     <div className="mt-2 bg-amber-600 w-full px-4 py-2 rounded-r-lg text-white h-[3rem]">
-                      <p className="line-clamp-1 text-xl">{owner.username}</p>
+                      <p className="line-clamp-1 text-xl">{props?.owner.username}</p>
                     </div>
                   </div>
                 </div>
@@ -181,9 +229,9 @@ const BotPage = ({ $, bot, long, owner, fetch, list }) => {
               <div className="mt-5">
                 <p className="text-white text-lg">Links</p>
                 <div className="w-full">
-                  {bot.bot_id && (
+                  {props?.bot.bot_id && (
                     <a
-                      href={`https://discord.com/users/${bot.bot_id}`}
+                      href={`https://discord.com/users/${props?.bot.bot_id}`}
                       className="flex items-center shadow-xl"
                       target="_blank"
                     >
@@ -195,9 +243,9 @@ const BotPage = ({ $, bot, long, owner, fetch, list }) => {
                       </div>
                     </a>
                   )}
-                  {bot.website && (
+                  {props?.bot.website && (
                     <a
-                      href={bot.website}
+                      href={props?.bot.website}
                       className="flex items-center shadow-xl"
                       target="_blank"
                     >
@@ -209,9 +257,9 @@ const BotPage = ({ $, bot, long, owner, fetch, list }) => {
                       </div>
                     </a>
                   )}
-                  {bot.invite && (
+                  {props?.bot.invite && (
                     <a
-                      href={bot.invite}
+                      href={props?.bot.invite}
                       className="flex items-center shadow-xl"
                       target="_blank"
                     >
@@ -223,9 +271,9 @@ const BotPage = ({ $, bot, long, owner, fetch, list }) => {
                       </div>
                     </a>
                   )}
-                  {bot.invite_link && (
+                  {props?.bot.invite_link && (
                     <a
-                      href={bot.invite}
+                      href={props?.bot.invite}
                       className="flex items-center shadow-xl"
                       target="_blank"
                     >
@@ -253,7 +301,7 @@ const BotPage = ({ $, bot, long, owner, fetch, list }) => {
                 <div className="px-4 mx-auto w-auto sm:px-6 lg:px-8 lg:text-center break-all">
                   <div
                     className="markdown-body col-span-9 pt-5 lg:pt-0 w-auto break-all"
-                    dangerouslySetInnerHTML={{ __html: long }}
+                    dangerouslySetInnerHTML={{ __html: props?.long }}
                   />
                 </div>
               </div>
@@ -265,14 +313,16 @@ const BotPage = ({ $, bot, long, owner, fetch, list }) => {
   );
 };
 
-export async function getServerSideProps(context) {
+export const getServerSideProps: GetServerSideProps<Props> = async function (ctx) {
+
+  const user = parseUser(ctx);
 
   const showdown = require('showdown');
   const converter = new showdown.Converter();
   converter.setOption('tables', 'true');
 
   const res = await fetch(
-    `https://catnip.metrobots.xyz/bots/${context.params.botId}`
+    `https://catnip.metrobots.xyz/bots/${ctx.params.botId}`
   );
   const data = await res.json();
 
@@ -288,7 +338,7 @@ export async function getServerSideProps(context) {
   const owner = await ownerFetch.json();
 
   const botInfo = await fetch(
-    `https://api.fateslist.xyz/blazefire/${context.params.botId}`
+    `https://api.fateslist.xyz/blazefire/${ctx.params.botId}`
   );
   const bot_info = await botInfo.json();
 
@@ -324,6 +374,7 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
+      user,
       bot: data,
       owner: owner,
       fetch: bot_info,
@@ -333,6 +384,6 @@ export async function getServerSideProps(context) {
         .replace(/(---)/g, "<hr />"),
     },
   };
-}
+};
 
 export default BotPage;

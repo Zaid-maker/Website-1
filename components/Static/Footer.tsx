@@ -17,7 +17,7 @@ const Footer = ({ $ }) => {
     <>
 
       <footer
-        className="bg-gradient-to-br from-amber-900/90 to-transparent max-w-full mt-10"
+        className="bg-gradient-to-br from-amber-900/90 to-transparent max-w-full mt-40"
         aria-labelledby="footer-heading"
       >
         <h2 id="footer-heading" className="sr-only">

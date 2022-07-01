@@ -3,16 +3,37 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { MetaTags } from "@/root/components/Header/Meta";
 import { NoDesc } from "@/root/components/Lists/NoDesc";
 import List_LongDescription from "@/root/components/BotLists/LongDesc";
+import { useRouter } from "next/router";
+import Header from "@/root/components/Static/Header";
+import { NavItems } from "@/root/utils/navItems";
+import { parseUser } from "@/root/utils/parseUser";
+import { DiscordUser } from "@/root/utils/types";
+import { GetServerSideProps } from 'next';
 import { toast } from "react-toastify";
-import marked from "marked";
-import sanitize from "insane";
 import { useState } from "react";
+import url2 from 'is-url';
 
-const ListPage = ({ $, list, desc }) => {
+interface Props {
+  user: DiscordUser;
+  list: {
+    id: string;
+    name: string;
+    domain: string;
+    state: number;
+    icon: string;
+  };
+  desc: string;
+}
+
+const ListPage = (props: Props) => {
+
+  const router = useRouter();
+  const $ = require("@/root/lang/" + (router.locale || "en"));
+
   const [copySuccess, setCopySuccess] = useState(false);
 
   const copyListID = () => {
-    if (navigator.clipboard.writeText(`${list.id}`)) {
+    if (navigator.clipboard.writeText(`${props?.list.id}`)) {
       setCopySuccess(true);
     } else {
       toast.error("Failed to Copy List ID");
@@ -26,11 +47,12 @@ const ListPage = ({ $, list, desc }) => {
   return (
     <>
       <MetaTags
-        title={list.name + " | Metro Reviews"}
-        description={"View " + list.name + "'s Page on Metro Reviews."}
+        title={props?.list.name + " | Metro Reviews"}
+        description={"View " + props?.list.name + "'s Page on Metro Reviews."}
         image="/img/logo.webp"
         name="Metro Reviews"
       />
+      <Header $={$} NavItems={NavItems} props={props} />
       <div className="overflow-hidden relative bg-background flex mx-auto items-center justify-center">
         <div className="mx-auto max-w-7xl">
           <div className="relative z-10 pb-8 bg-background sm:pb-16 md:pb-20 lg:pb-28 lg:w-full lg:max-w-2xl xl:pb-32">
@@ -38,13 +60,13 @@ const ListPage = ({ $, list, desc }) => {
               <div className="text-center">
                 <div className="border-[2.2px] w-[8rem] h-[8rem] border-white-500/50 rounded-full flex mx-auto items-center justify-center">
                   <Avatar
-                    src={list.icon || "/img/defaultUser.webp"}
+                    src={props?.list.icon || "/img/defaultUser.webp"}
                     className="rounded-full mx-auto inline-flex"
                     height="512"
                   />
                 </div>
                 <h1 className="inline text-4xl font-extrabold tracking-tight text-slate-300 sm:text-5xl md:text-6xl">
-                  {list.name}
+                  {props?.list.name}
                 </h1>
               </div>
             </main>
@@ -61,14 +83,14 @@ const ListPage = ({ $, list, desc }) => {
                 List Info
               </p>
               <p className="text-white text-sm text-opacity-50 mb-5 text-center">
-                Useful Info and Links for {list.name}
+                Useful Info and Links for {props?.list.name}
               </p>
               <hr />
               <div className="mt-5">
                 <div className="items-center justify-center">
-                  {list.domain && (
+                  {props?.list.domain && (
                     <a
-                      href={list.domain}
+                      href={props?.list.domain}
                       className="flex items-center shadow-xl"
                       target="_blank"
                     >
@@ -89,15 +111,15 @@ const ListPage = ({ $, list, desc }) => {
                     </div>
                     <div className="mt-2 bg-amber-600 w-full px-4 py-2 rounded-r-lg text-white">
                       <p className="line-clamp-1">
-                        {list.state === 0
+                        {props?.list.state === 0
                           ? `${$.index.list_stats.lists.states.pending}`
-                          : list.state === 1
+                          : props?.list.state === 1
                           ? `${$.index.list_stats.lists.states.supported}`
-                          : list.state === 2
+                          : props?.list.state === 2
                           ? `${$.index.list_stats.lists.states.defunction}`
-                          : list.state === 3
+                          : props?.list.state === 3
                           ? `${$.index.list_stats.lists.states.blacklisted}`
-                          : list.state === 4
+                          : props?.list.state === 4
                           ? `${$.index.list_stats.lists.states.unconfirmed}`
                           : `${$.index.list_stats.lists.states.err_failed}`}
                       </p>
@@ -122,98 +144,59 @@ const ListPage = ({ $, list, desc }) => {
             </div>
           </div>
         </div>
-        <List_LongDescription value={desc} />
+        <List_LongDescription value={props?.desc} />
       </div>
     </>
   );
 };
 
-export async function getServerSideProps(context) {
+export const getServerSideProps: GetServerSideProps<Props> = async function (ctx) {
+
+  const user = parseUser(ctx);
+
+  const showdown = require('showdown');
+  const converter = new showdown.Converter();
+  converter.setOption('tables', 'true');
+
   const res = await fetch(
-    `https://catnip.metrobots.xyz/list/${context.params.listId}`
+    `https://catnip.metrobots.xyz/list/${ctx.params.listId}`
   );
   const data = await res.json();
 
-  marked.setOptions({
-    gfm: true,
-    tables: true,
-    breaks: true,
-    pedantic: true,
-    sanitize: false,
-    smartLists: true,
-    smartyPants: true,
-  });
-
-  const content = await sanitize(marked.parse(data.description), {
-    allowedAttributes: {
-      a: ["href", "name", "target"],
-      iframe: ["allowfullscreen", "frameborder", "src"],
-      img: ["src"],
-    },
-    allowedSchemes: ["http", "https", "mailto"],
-    allowedTags: [
-      "a",
-      "article",
-      "b",
-      "blockquote",
-      "br",
-      "caption",
-      "code",
-      "del",
-      "details",
-      "div",
-      "em",
-      "h1",
-      "h2",
-      "h3",
-      "h4",
-      "h5",
-      "h6",
-      "hr",
-      "i",
-      "img",
-      "ins",
-      "kbd",
-      "li",
-      "main",
-      "ol",
-      "p",
-      "pre",
-      "section",
-      "span",
-      "strike",
-      "strong",
-      "sub",
-      "summary",
-      "sup",
-      "table",
-      "tbody",
-      "td",
-      "th",
-      "thead",
-      "tr",
-      "u",
-      "ul",
-    ],
-    filter: null,
-    transformText: null,
-  });
-
-  await content
-    .replace(/\r\n|\r/g, "\n")
-    .replace(/\t/g, "    ")
-    .replace(/[\w\<][^\n]*\n+/g, function (m) {
-      return /\n{2}/.test(m) ? m : m.replace(/\s+$/, "") + "  \n";
-    });
+  let desc;
+  let isUrl = url2(data.description.replace('\n', '').replace('', ''));
+   
+   if (isUrl)
+     desc = `<iframe src="${data.description
+      .replace('\n', '')
+      .replace(
+        ' ',
+        ''
+      )}" width="100%" height="100%" style="width: 100%; height: 100vh; color: black;"><object data="${data.description
+      .replace('\n', '')
+      .replace(
+        ' ',
+        ''
+      )}" width="100%" height="100%" style="width: 100%; height: 100vh; color: black;"><embed src="${data.description
+      .replace('\n', '')
+      .replace(
+        ' ',
+        ''
+      )}" width="100%" height="100%" style="width: 100%; height: 100vh; color: black;"> </embed>${data.description
+      .replace('\n', '')
+      .replace(' ', '')}</object></iframe>`;
+      else if (data.description) desc = converter.makeHtml(data.description);
+      else desc = data.description;
 
   return {
     props: {
+      user,
       list: data,
-      desc: content
+      desc: desc
         .replace(/(\r\n|\n\r|\r|\n)/g, "<br />")
         .replace(/(---)/g, "<hr />"),
     },
   };
-}
+};
 
 export default ListPage;
