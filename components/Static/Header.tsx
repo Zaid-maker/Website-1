@@ -416,7 +416,7 @@ const Header = ({ $, NavItems, props }) => {
                         className="cursor-pointer flow-root px-4 py-3 transition duration-150 ease-in-out rounded-md hover:bg-amber-700/20 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                       >
                         <span className="flex items-center">
-                          <i className="mr-1 flex items-center justify-center text-amber-500 fal fa-sign-out-alt"></i>
+                          <i className="mr-1 flex items-center justify-center text-amber-500 fas fa-gavel"></i>
                             <span className="text-sm font-medium text-amber-500">
                               Terms
                             </span>
@@ -430,7 +430,7 @@ const Header = ({ $, NavItems, props }) => {
                         className="cursor-pointer flow-root px-4 py-3 transition duration-150 ease-in-out rounded-md hover:bg-amber-700/20 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                       >
                         <span className="flex items-center">
-                          <i className="mr-1 flex items-center justify-center text-amber-500 fal fa-sign-out-alt"></i>
+                          <i className="mr-1 flex items-center justify-center text-amber-500 fas fa-fingerprint"></i>
                             <span className="text-sm font-medium text-amber-500">
                               Privacy
                             </span>
