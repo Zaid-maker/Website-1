@@ -2,6 +2,7 @@ import { toast } from "react-toastify";
 import { useRef, useState } from "react";
 import { MetaTags } from "@/root/components/Header/Meta";
 import { Loading } from "@/root/components/Interface/Loading";
+import Avatar from "@/root/components/Bots/Avatar";
 import Link from "next/link";
 import useSWR from "swr";
 
@@ -89,10 +90,8 @@ export default function Bots({ $, fetch }) {
                 className="flex flex-col justify-center text-white rounded w-auto h-max"
               >
                 <div className="flex-1 gap-x-4 flex items-center bg-gradient-to-br from-neutral-900/80 to-neutral-900/20 p-3 rounded-lg w-auto h-full border border-amber-800">
-                  <img
-                    className="rounded-full h-24 w-24"
-                    alt={bot.username}
-                    src="/img/defaultUser.webp"
+                  <Avatar
+                     id={bot.bot_id}
                   />
                   <div>
                     <h1
