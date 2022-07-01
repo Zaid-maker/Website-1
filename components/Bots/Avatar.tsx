@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { Loading } from "../Interface/Loading";
 import Spinner from "../Interface/Spinner";
 
 interface Props {
@@ -22,6 +21,7 @@ export default function Avatar({ id }: Props) {
     }, []);
 
     if (isLoading) return <Spinner />
+    if (!data) return <Spinner />
 
     return (
         <>

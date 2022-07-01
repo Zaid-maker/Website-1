@@ -3,8 +3,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { MetaTags } from "@/root/components/Header/Meta";
 import { useRef, useState } from "react";
 import { toast } from "react-toastify";
-import marked from "marked";
-import sanitize from "insane";
+import url2 from 'is-url';
 
 const BotPage = ({ $, bot, long, owner, fetch, list }) => {
   const [copySuccess, setCopySuccess] = useState(false);
@@ -249,7 +248,7 @@ const BotPage = ({ $, bot, long, owner, fetch, list }) => {
             <div className="mt-5">
               <div
                 className="text-center w-full h-auto bg-gradient-to-br from-neutral-900/90 to-neutral-900/50 rounded-lg p-6 shadow-md mx-auto"
-                id="widgets"
+                id="long"
               >
                 <div className="px-4 mx-auto w-auto sm:px-6 lg:px-8 lg:text-center break-all">
                   <div
@@ -267,6 +266,11 @@ const BotPage = ({ $, bot, long, owner, fetch, list }) => {
 };
 
 export async function getServerSideProps(context) {
+
+  const showdown = require('showdown');
+  const converter = new showdown.Converter();
+  converter.setOption('tables', 'true');
+
   const res = await fetch(
     `https://catnip.metrobots.xyz/bots/${context.params.botId}`
   );
@@ -293,77 +297,30 @@ export async function getServerSideProps(context) {
   );
   const list = await lists.json();
 
-  marked.setOptions({
-    gfm: true,
-    tables: true,
-    breaks: true,
-    pedantic: true,
-    sanitize: false,
-    smartLists: true,
-    smartyPants: true,
-  });
-
-  const content = await sanitize(marked.parse(data.long_description), {
-    allowedAttributes: {
-      a: ["href", "name", "target"],
-      iframe: ["allowfullscreen", "frameborder", "src"],
-      img: ["src"],
-    },
-    allowedSchemes: ["http", "https", "mailto"],
-    allowedTags: [
-      "a",
-      "article",
-      "b",
-      "blockquote",
-      "br",
-      "caption",
-      "code",
-      "del",
-      "details",
-      "div",
-      "em",
-      "h1",
-      "h2",
-      "h3",
-      "h4",
-      "h5",
-      "h6",
-      "hr",
-      "i",
-      "img",
-      "ins",
-      "kbd",
-      "li",
-      "main",
-      "ol",
-      "p",
-      "pre",
-      "section",
-      "span",
-      "strike",
-      "strong",
-      "sub",
-      "summary",
-      "sup",
-      "table",
-      "tbody",
-      "td",
-      "th",
-      "thead",
-      "tr",
-      "u",
-      "ul",
-    ],
-    filter: null,
-    transformText: null,
-  });
-
-  await content
-    .replace(/\r\n|\r/g, "\n")
-    .replace(/\t/g, "    ")
-    .replace(/[\w\<][^\n]*\n+/g, function (m) {
-      return /\n{2}/.test(m) ? m : m.replace(/\s+$/, "") + "  \n";
-    });
+  let desc;
+  let isUrl = url2(data.long_description.replace('\n', '').replace('', ''));
+   
+   if (isUrl)
+     desc = `<iframe src="${data.long_description
+      .replace('\n', '')
+      .replace(
+        ' ',
+        ''
+      )}" width="100%" height="100%" style="width: 100%; height: 100vh; color: black;"><object data="${data.long_description
+      .replace('\n', '')
+      .replace(
+        ' ',
+        ''
+      )}" width="100%" height="100%" style="width: 100%; height: 100vh; color: black;"><embed src="${data.long_description
+      .replace('\n', '')
+      .replace(
+        ' ',
+        ''
+      )}" width="100%" height="100%" style="width: 100%; height: 100vh; color: black;"> </embed>${data.long_description
+      .replace('\n', '')
+      .replace(' ', '')}</object></iframe>`;
+      else if (data.long_description) desc = converter.makeHtml(data.long_description);
+      else desc = data.long_description;
 
   return {
     props: {
@@ -371,7 +328,7 @@ export async function getServerSideProps(context) {
       owner: owner,
       fetch: bot_info,
       list: list,
-      long: content
+      long: desc
         .replace(/(\r\n|\n\r|\r|\n)/g, "<br />")
         .replace(/(---)/g, "<hr />"),
     },
