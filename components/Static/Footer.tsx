@@ -49,6 +49,7 @@ const Footer = ({ $ }) => {
                         width="24"
                         height="18"
                         className="mr-2 h-4 rounded-sm"
+                        alt={locale.country.name + 'logo'}
                       />
                       {locale.name}
                       <ChevronDownIcon
@@ -86,6 +87,7 @@ const Footer = ({ $ }) => {
                                     width="24"
                                     height="18"
                                     className="mr-2 h-4 rounded-sm"
+                                    alt={locales[locale].country.name + 'logo'}
                                   />
                                   {locales[locale].name}
                                 </button>

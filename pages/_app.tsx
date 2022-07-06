@@ -7,6 +7,7 @@ import Head from "next/head";
 import "react-toastify/dist/ReactToastify.css";
 import { SWRConfig } from "swr";
 import Script from "next/script";
+import Document from "next/document";
 
 import Header from "../components/Static/Header";
 import Footer from "../components/Static/Footer";
@@ -19,10 +20,22 @@ import "../lib/icons";
 
 import { ThemeProvider } from "next-themes";
 import Cookies from "../components/Interface/Cookies";
+import { useEffect } from "react";
 
 export default function MetroApp({ Component, pageProps }) {
   const router = useRouter();
   const locale = require("../lang/" + (router.locale || "en"));
+
+  const handleScroll = {};
+
+  useEffect(() => {
+    window.addEventListener('wheel', (evt) => {
+
+    }, {
+      capture: true,
+      passive: false
+    })
+  })
 
   return (
     <>

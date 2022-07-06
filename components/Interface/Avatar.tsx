@@ -12,6 +12,7 @@ const Avatar = (props) => {
       content={tippy ? tippy : "Tippy disabled for this image."}
     >
       <img
+        alt="Avatars"
         src={avatar}
         onError={() => {
           setAvatar("/img/logo.png");

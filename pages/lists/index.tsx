@@ -108,7 +108,7 @@ export default function Lists(props: Props) {
                 <div className="flex-1 gap-x-4 flex items-center bg-gradient-to-br from-neutral-900/80 to-neutral-900/20 p-3 rounded-lg w-auto h-full border border-amber-800">
                   <img
                     className="rounded-full h-24 w-24"
-                    alt={list.name}
+                    alt={list.name + 'logo'}
                     src={!list.icon ? `/img/defaultUser.webp` : list.icon}
                   />
                   <div>

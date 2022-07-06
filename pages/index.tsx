@@ -132,6 +132,7 @@ export default function Index(props: Props) {
                 <img
                   src={stat.icon || "/img/logo.webp"}
                   className="flex mx-auto h-20 w-20 items-center justify-center"
+                  alt="Metro Logo"
                 />
                 <p
                   className="text-2xl text-white font-semibold"

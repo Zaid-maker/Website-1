@@ -61,6 +61,7 @@ const ListPage = (props: Props) => {
                 <div className="border-[2.2px] w-[8rem] h-[8rem] border-white-500/50 rounded-full flex mx-auto items-center justify-center">
                   <Avatar
                     src={props?.list.icon || "/img/defaultUser.webp"}
+                    alt={props?.list.name + 'logo' || 'Default List Logo'}
                     className="rounded-full mx-auto inline-flex"
                     height="512"
                   />

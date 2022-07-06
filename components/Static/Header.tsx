@@ -28,7 +28,7 @@ const MobileNavbar = ({ Menu, open, setOpen, NavItems }) => {
         <div className="relative w-full h-full">
           <div className="flex justify-between border-b border-white/20 items-center px-5 py-4">
             <div className="flex items-center">
-              <img width="32" className="icon-glow" src="/img/logo.png" />
+              <img width="32" height="32" className="icon-glow" alt="Metro Logo" src="/img/logo.png" />
               <p className=" font-extrabold ml-1 text-2xl">Metro</p>
             </div>
             <button onClick={() => setOpen(!open)}>
@@ -154,7 +154,7 @@ const Header = ({ $, NavItems, props }) => {
       {banner && (
         <div className="bg-amber-900/20 py-2 px-4 rounded-xl mt-5 md:flex items-center md:justify-between">
           <div className="flex items-center space-x-4">
-            <img className="w-8 h-8" src="/img/information.webp" />
+            <img className="w-8 h-8" alt="info-logo" src="/img/information.webp" />
             <h1 className="font-light text-zinc-200">
               <b className="font-semibold text-white">Welcome</b> to Metro
               Reviews.{" "}
@@ -191,6 +191,7 @@ const Header = ({ $, NavItems, props }) => {
           <div className="flex items-center space-x-6">
             <div className="flex items-center space-x-3">
               <img
+              alt="Metro Logo"
                 src="/img/logo.webp"
                 className={`
                                     rounded-full
