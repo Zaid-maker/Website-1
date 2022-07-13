@@ -126,7 +126,7 @@ export default function Index(props: Props) {
               ),
             }}
           />
-          <div className="lg:px-32 flex flex-col lg:flex-row items-center justify-center lg:justify-between w-full mx-auto">
+          <div className="col-span-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
             {stats.map((stat, statIdx) => (
               <div key={statIdx} className="mt-4 mb-4">
                 <img

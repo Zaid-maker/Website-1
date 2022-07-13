@@ -2,7 +2,7 @@ const withPWA = require("next-pwa");
 
 module.exports = withPWA({
   images: {
-    domains: ["cdn.discordapp.com"],
+    domains: ["cdn.discordapp.com", "cdn.infinitybots.xyz"],
   },
   i18n: {
     locales: Object.keys(require("./locales.config.js")),
@@ -20,7 +20,8 @@ module.exports = withPWA({
     CLIENT_SECRET: process.env.CLIENT_SECRET,
     APP_URI: process.env.APP_URI,
     JWT_SECRET: process.env.JWT_SECRET,
-    LOGOUT_PASS: process.env.LOGOUT_PASS
+    LOGOUT_PASS: process.env.LOGOUT_PASS,
+    API_AUTH: process.env.API_AUTH
   },
   async redirects() {
     return [
@@ -29,6 +30,16 @@ module.exports = withPWA({
         destination: "https://github.com/MetroReviews/Website/issues/new",
         permanent: true,
       },
+      {
+        source: "/discord",
+        destination: "https://discord.gg/49DE35a5eJ",
+        permanent: true
+      },
+      {
+        source: "/support",
+        destination: "https://discord.gg/49DE35a5eJ",
+        permanent: true
+      }
     ];
   },
 });
