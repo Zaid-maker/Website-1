@@ -105,7 +105,7 @@ const Header = ({ $, NavItems, props }) => {
         title: 'Add a List',
         description: 'Submit a new Bot List to Metro Reviews.',
         type: 'link',
-        href: '/lists/apply'
+        href: 'https://enroll.metrobots.xyz'
     },
     {
       icon: <i className="w-8 flex items-center justify-center fas fa-user-cog"></i>,
