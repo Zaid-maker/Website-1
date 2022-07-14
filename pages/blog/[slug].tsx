@@ -27,7 +27,7 @@ export default function Posts({ source, frontMatter }: InferGetStaticPropsType<t
           title={frontMatter.title + " | Metro Blog"}
           description={frontMatter.excerpt}
           image="/img/logo.webp"
-          name={"Posted By" + frontMatter.author}
+          name={"Posted By: " + frontMatter.author}
         />
         <Header $={$} NavItems={NavItems} props={null} allowLogin={false} />
 		<div className="overflow-hidden relative bg-background flex mx-auto items-center justify-center">
