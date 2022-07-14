@@ -34,4 +34,11 @@ export const NavItems = [
       activeIcon: "fas fa-robot",
       href: "/bots",
     },
+    {
+      link: true,
+      name: 'Blog',
+      icon: "fas fa-book",
+      activeIcon: "fas fa-book-open",
+      href: "/blog",
+    },
   ];
