@@ -1180,3 +1180,93 @@ a.cookiePP {
 a.cookiePP:hover {
   color: rgb(75 98 255);
 }
+
+.prose pre {
+	@apply border border-amber-500 bg-amber-800;
+}
+
+.prose code {
+	@apply text-amber-500 px-1 py-0.5 border border-amber-800 rounded-md bg-amber-800;
+}
+
+.prose img {
+	/* Don't apply styles to next/image */
+	@apply m-0;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	@apply text-amber-400;
+}
+
+.token.punctuation {
+	@apply text-amber-400;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	@apply text-green-500;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	@apply text-purple-500;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+	@apply text-yellow-500;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+	@apply text-blue-500;
+}
+
+.token.function,
+.token.class-name {
+	@apply text-pink-500;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+	@apply text-yellow-500;
+}
+
+code[class*='language-'],
+pre[class*='language-'] {
+	@apply text-amber-50 mt-0;
+}
+
+.remark-code-title {
+	@apply text-amber-500 px-5 py-3 border border-b-0 border-amber-400 rounded-t bg-amber-800 text-sm font-mono font-bold;
+}
+
+.remark-code-title + pre {
+	@apply mt-0 rounded-t-none;
+}
+
+.favicon {
+  -webkit-transition: -webkit-transform 0.8s ease-in-out;
+  transition: transform 0.8s ease-in-out;
+}
+.favicon:hover {
+  -webkit-transform: rotate(360deg);
+  transform: rotate(360deg);
+}

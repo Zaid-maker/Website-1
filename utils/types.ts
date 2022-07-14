@@ -9,3 +9,22 @@ export interface DiscordUser {
   mfa_enabled: boolean;
   premium_type: number;
 }
+
+export interface BlogAuthor {
+  name: string;
+  picture: string;
+}
+
+export interface BlogPost {
+  slug: string;
+  title: string;
+  description: string;
+  date: string;
+  author: BlogAuthor;
+  path: string;
+  coverImage: string;
+  ogImage: {
+    url: string;
+  }
+  content: string;
+}

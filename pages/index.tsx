@@ -39,7 +39,7 @@ export default function Index(props: Props) {
         image="/img/logo.webp"
         name="Metro Reviews"
       />
-      <Header $={$} NavItems={NavItems} props={props} />
+      <Header $={$} NavItems={NavItems} props={props} allowLogin={true} />
 
       <div className="py-20 mb-40 max-w-3xl mx-auto">
         <p

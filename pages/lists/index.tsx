@@ -39,7 +39,7 @@ export default function Lists(props: Props) {
         image="/img/logo.webp"
         name="Metro Reviews"
       />
-      <Header $={$} NavItems={NavItems} props={props} />
+      <Header $={$} NavItems={NavItems} props={props} allowLogin={true} />
       <div>
         <div className="overflow-hidden relative bg-background flex mx-auto items-center justify-center">
           <div className="mx-auto max-w-7xl">

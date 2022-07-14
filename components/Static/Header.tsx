@@ -9,7 +9,7 @@ import { useTheme } from "next-themes";
 import Window from "@windui/window";
 import { setCookies } from "cookies-next";
 
-const MobileNavbar = ({ Menu, open, setOpen, NavItems }) => {
+const MobileNavbar = ({ Menu, open, setOpen, NavItems, allowLogin }) => {
   const { theme, setTheme } = useTheme();
   const router = useRouter();
   return (
@@ -72,7 +72,7 @@ const MobileNavbar = ({ Menu, open, setOpen, NavItems }) => {
     </>
   );
 };
-const Header = ({ $, NavItems, props }) => {
+const Header = ({ $, NavItems, props, allowLogin }) => {
   const [open, setOpen] = useState(false);
   const [colors, setColors] = useState(false);
   const [isDiscovered, setIsDiscovered] = useState(false);
@@ -194,7 +194,7 @@ const Header = ({ $, NavItems, props }) => {
               alt="Metro Logo"
                 src="/img/logo.webp"
                 className={`
-                                    rounded-full
+                                    favicon rounded-full
                                 `}
                 width="48"
                 height="48"
@@ -319,7 +319,9 @@ const Header = ({ $, NavItems, props }) => {
                 </Menu.Items>
               </Transition>
             </Menu>
-
+            <>
+            {allowLogin && (
+            <div>
             {!props?.user ? (
               <Link href={`/api/auth`} locale="en">
                 <a className="w-auto flex items-center justify-center shadow-lg gap-x-2 shadow-amber-600/20 rounded-xl py-2.5 font-medium px-7 bg-gradient-to-tl from-amber-500 to-amber-700 text-white  hover:opacity-80 transition duration-200">
@@ -461,7 +463,10 @@ const Header = ({ $, NavItems, props }) => {
                 </>
                )}
               </Popover>
+              )}
+             </div>
             )}
+           </>
           </div>
         </div>
       </header>
@@ -471,6 +476,7 @@ const Header = ({ $, NavItems, props }) => {
         setOpen={setOpen}
         NavItems={NavItems}
         Menu={() => setOpen(!open)}
+        allowLogin={allowLogin}
       />
     </>
   );

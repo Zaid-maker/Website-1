@@ -30,7 +30,7 @@ const UnAuthorized = (props: Props) => {
                 image="/img/logo.webp"
                 name="Metro Reviews"
             />
-            <Header $={$} NavItems={NavItems} props={props} />
+            <Header $={$} NavItems={NavItems} props={props} allowLogin={true} />
             <div className="max-w-7xl text-center py-20 mx-auto">
                 <h1 className="text-4xl font-extrabold text-white">Unauthorized</h1>
                 <p className="text-xl font-thin text-white text-opacity-75">

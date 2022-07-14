@@ -26,7 +26,7 @@ export default function Terms(props: Props) {
         image="/img/logo.webp"
         name="Metro Reviews"
       />
-      <Header $={$} NavItems={NavItems} props={props} />
+      <Header $={$} NavItems={NavItems} props={props} allowLogin={true} />
       <div className="overflow-hidden relative bg-background flex mx-auto items-center justify-center">
         <div className="mx-auto max-w-7xl">
           <div className="relative z-10 pb-8 bg-background sm:pb-16 md:pb-20 lg:pb-28 lg:w-full lg:max-w-2xl xl:pb-32">

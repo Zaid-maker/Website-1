@@ -25,7 +25,7 @@ const SoonPage = (props: Props) => {
         image="/img/logo.webp"
         name="Metro Reviews"
       />
-      <Header $={$} NavItems={NavItems} props={props} />
+      <Header $={$} NavItems={NavItems} props={props} allowLogin={false} />
       <div className="max-w-7xl text-center py-20 mx-auto">
         <h1 className="text-4xl font-extrabold text-white">COMING SOON!</h1>
 
