@@ -64,7 +64,7 @@ export default function Index(props: Props) {
               Get Support
             </a>
           </Link>
-          <Link href={"https://enroll.metrobots.xyz"}>
+          <Link href={"/lists/apply"}>
             <a
               target="_blank"
               onClick={() => setEnterLoading(true)}

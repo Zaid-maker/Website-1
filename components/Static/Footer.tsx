@@ -245,7 +245,7 @@ const Footer = ({ $ }) => {
                       </Link>
                     </li>
                     <li>
-                      <Link href={"https://enroll.metrobots.xyz"}>
+                      <Link href={"/lists/apply"}>
                         <a className="text-white hover:text-amber-500">
                           {$.footer.menus.misc.items.apps}
                         </a>

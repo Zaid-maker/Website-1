@@ -25,10 +25,10 @@ const UnAuthorized = (props: Props) => {
     return (
         <>
             <MetaTags
-                title="401 | Infinity Bots"
+                title="401 | Metro Reviews"
                 description="Login is required to view this page"
                 image="/img/logo.webp"
-                name="Infinity Bots"
+                name="Metro Reviews"
             />
             <Header $={$} NavItems={NavItems} props={props} />
             <div className="max-w-7xl text-center py-20 mx-auto">

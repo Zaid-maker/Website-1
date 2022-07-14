@@ -24,10 +24,17 @@ import toast from 'react-hot-toast';
     const $ = require("../../lang/" + (router.locale || "en"));
 
      const [value, setValue] = useState({
+        listID: '',
         listName: '',
         listDom: '',
-        listDesc: ''
-        
+        listLogo: '',
+        listDesc: '',
+        listOwner: '',
+        revSystem: '',
+        listAge: '',
+        listLang: '',
+        forkedList: '',
+        apiChanges: ''
     });
  
      if (!props?.user || !props?.user.id) return <UnAuthorized user={null} />;
@@ -40,13 +47,41 @@ import toast from 'react-hot-toast';
                 storedValue = JSON.parse(storedValue) || {};
 
                 // @ts-ignore
+                const listID = storedValue.listID ? storedValue.listID : '';
+                // @ts-ignore
                 const listName = storedValue.listName ? storedValue.listName : '';
                 // @ts-ignore
                 const listDom = storedValue.listDom ? storedValue.listDom : '';
                 // @ts-ignore
+                const listLogo = storedValue.listLogo ? storedValue.listLogo : '';
+                // @ts-ignore
                 const listDesc = storedValue.listDesc ? storedValue.listDesc : '';
+                // @ts-ignore
+                const listOwner = storedValue.listOwner ? storedValue.listOwner : '';
+                // @ts-ignore
+                const revSystem = storedValue.revSystem ? storedValue.revSystem : '';
+                // @ts-ignore
+                const listAge = storedValue.listAge ? storedValue.listAge : '';
+                // @ts-ignore
+                const listLang = storedValue.listLang ? storedValue.listLang : '';
+                // @ts-ignore
+                const forkedList = storedValue.forkedList ? storedValue.forkedList : '';
+                // @ts-ignore
+                const apiChanges = storedValue.apiChanges ? storedValue.apiChanges : '';
 
-                setValue({ listName, listDom, listDesc });
+                setValue({ 
+                    listID, 
+                    listName,
+                    listDom, 
+                    listLogo, 
+                    listDesc, 
+                    listOwner, 
+                    revSystem, 
+                    listAge, 
+                    listLang,
+                    forkedList,
+                    apiChanges
+                });
             }
         }
     }, []);
@@ -62,12 +97,84 @@ import toast from 'react-hot-toast';
         localStorage.setItem('value', JSON.stringify(persListName));
     };
 
+    const onListIDUpdate = e => {
+        const listID = e.target.name;
+        const persListID = { ...value, [listID]: e.target.value };
+
+        setValue(persListID);
+        localStorage.setItem('value', JSON.stringify(persListID));
+    }
+
     const onListDomUpdate = e => {
         const listDom = e.target.name;
         const persListDom = { ...value, [listDom]: e.target.value };
 
         setValue(persListDom);
         localStorage.setItem('value', JSON.stringify(persListDom));
+    }
+
+    const onListLogoUpdate = e => {
+        const listLogo = e.target.name;
+        const persListLogo = { ...value, [listLogo]: e.target.value };
+
+        setValue(persListLogo);
+        localStorage.setItem('value', JSON.stringify(persListLogo));
+    }
+
+    const onListDescUpdate = e => {
+        const listDesc = e.target.name;
+        const persListDesc = { ...value, [listDesc]: e.target.value };
+
+        setValue(persListDesc);
+        localStorage.setItem('value', JSON.stringify(persListDesc));
+    }
+
+    const onListOwnerUpdate = e => {
+        const listOwner = e.target.name;
+        const persListOwner = { ...value, [listOwner]: e.target.value };
+
+        setValue(persListOwner);
+        localStorage.setItem('value', JSON.stringify(persListOwner));
+    }
+
+    const onRevSystemUpdate = e => {
+        const revSystem = e.target.name;
+        const persRevSystem = { ...value, [revSystem]: e.target.value };
+
+        setValue(persRevSystem);
+        localStorage.setItem('value', JSON.stringify(persRevSystem));
+    }
+
+    const onListAgeUpdate = e => {
+        const listAge = e.target.name;
+        const persListAge = { ...value, [listAge]: e.target.value };
+
+        setValue(persListAge);
+        localStorage.setItem('value', JSON.stringify(persListAge));
+    }
+
+    const onListLangUpdate = e => {
+        const listLang = e.target.name;
+        const persListLang = { ...value, [listLang]: e.target.value };
+
+        setValue(persListLang);
+        localStorage.setItem('value', JSON.stringify(persListLang));
+    }
+
+    const onForkedListUpdate = e => {
+        const forkedList = e.target.name;
+        const persForkedList = { ...value, [forkedList]: e.target.value };
+
+        setValue(persForkedList);
+        localStorage.setItem('value', JSON.stringify(persForkedList));
+    }
+
+    const onApiChangeUpdate = e => {
+        const apiChanges = e.target.name;
+        const persApiChanges = { ...value, [apiChanges]: e.target.value };
+
+        setValue(persApiChanges);
+        localStorage.setItem('value', JSON.stringify(persApiChanges));
     }
  
      return (
@@ -184,15 +291,25 @@ import toast from 'react-hot-toast';
                                                 'Authorization': `${process.env.API_AUTH}`
                                             },
                                             body: JSON.stringify({
+                                                userID: props?.user.id,
+                                                userName: props?.user.username,
+                                                listID: values.listID,
                                                 listName: values.listName,
+                                                listDom: values.listDom,
+                                                listLogo: values.listLogo,
                                                 listDesc: values.listDesc,
-                                                listDom: values.listDom
+                                                listOwner: values.listOwner,
+                                                revSystem: values.revSystem,
+                                                listAge: values.listAge,
+                                                listLang: values.listLang,
+                                                forkedList: values.forkedList,
+                                                apiChanges: values.apiChanges
                                             }),
                                             method: 'POST'
                                         });
 
                                           await toast.promise(promise, {
-										     success: 'Success!',
+										     success: 'Your Bot List has been submitted!',
 										     loading: 'Sending...',
 										     error: (error: Error) =>
 											   error?.message ?? 'Something went wrong...',
@@ -213,14 +330,14 @@ import toast from 'react-hot-toast';
                                              </h2>
                                              <input
                                                  name="userName"
-                                                 placeholder={props?.user.username}
-                                                 value={props?.user.username}
+                                                 placeholder={props?.user?.username}
+                                                 value={props?.user?.username}
                                                  type="text"
                                                  className="w-full mx-auto mt-4 flex transition duration-200 hover:bg-opacity-50 bg-black bg-opacity-30 text-white focus:text-amber-400 rounded-xl border border-white/10 focus:border-amber-400 focus:outline-none py-4 px-6 disabled"
                                                  disabled={true}
                                              />
                                          </div>   
-                                         <div className="col-span-9 pt-5 lg:pt-0 items-center justify-center">
+                                         <div className="col-span-9 pt-5 lg:pt-0 items-center justify-center mt-6">
                                              <h2 className="text-white text-2xl text-left">
                                                  <FontAwesomeIcon
                                                      size="lg"
@@ -238,11 +355,31 @@ import toast from 'react-hot-toast';
                                                  disabled={true}
                                              />
                                          </div>
-                                         <div className="mt-8 col-span-9 pt-5 lg:pt-0 items-center justify-center">
+                                         <div className="mt-8 col-span-9 pt-5 lg:pt-0 items-center justify-center mt-6">
                                              <h2 className="text-white text-2xl text-left">
                                                  <FontAwesomeIcon
                                                      size="lg"
-                                                     icon={['fas', 'info-circle']}
+                                                     icon={['fas', 'id-card']}
+                                                     className="text-white mr-2"
+                                                 />{' '}
+                                                 List ID <span className="text-red-600">*</span>
+                                             </h2>
+                                             <p className="mt-4 text-white/50 text-sm text-left">
+                                               • Server ID for your Bot List
+                                             </p>
+                                             <input
+                                                 name="listID"
+                                                 placeholder="969274747093397555"
+                                                 value={value.listID}
+                                                 onChange={onListIDUpdate}
+                                                 className="w-full mx-auto mt-4 flex transition duration-200 hover:bg-opacity-50 bg-black bg-opacity-30 text-white focus:text-amber-400 rounded-xl border border-white/10 focus:border-amber-400 focus:outline-none py-4 px-6"
+                                             />
+                                         </div>
+                                         <div className="mt-8 col-span-9 pt-5 lg:pt-0 items-center justify-center mt-6">
+                                             <h2 className="text-white text-2xl text-left">
+                                                 <FontAwesomeIcon
+                                                     size="lg"
+                                                     icon={['fas', 'id-card-alt']}
                                                      className="text-white mr-2"
                                                  />{' '}
                                                  List Name <span className="text-red-600">*</span>
@@ -258,11 +395,11 @@ import toast from 'react-hot-toast';
                                                  className="w-full mx-auto mt-4 flex transition duration-200 hover:bg-opacity-50 bg-black bg-opacity-30 text-white focus:text-amber-400 rounded-xl border border-white/10 focus:border-amber-400 focus:outline-none py-4 px-6"
                                              />
                                          </div>
-                                         <div className="mt-8 col-span-9 pt-5 lg:pt-0 items-center justify-center">
+                                         <div className="mt-8 col-span-9 pt-5 lg:pt-0 items-center justify-center mt-6">
                                              <h2 className="text-white text-2xl text-left">
                                                  <FontAwesomeIcon
                                                      size="lg"
-                                                     icon={['fas', 'info-circle']}
+                                                     icon={['fas', 'link']}
                                                      className="text-white mr-2"
                                                  />{' '}
                                                  List Domain <span className="text-red-600">*</span>
@@ -278,12 +415,172 @@ import toast from 'react-hot-toast';
                                                  className="w-full mx-auto mt-4 flex transition duration-200 hover:bg-opacity-50 bg-black bg-opacity-30 text-white focus:text-amber-400 rounded-xl border border-white/10 focus:border-amber-400 focus:outline-none py-4 px-6"
                                              />
                                          </div>
-                                         <div className="flex pt-2 mx-auto left-0 mt-6">
+                                         <div className="mt-8 col-span-9 pt-5 lg:pt-0 items-center justify-center mt-6">
+                                             <h2 className="text-white text-2xl text-left">
+                                                 <FontAwesomeIcon
+                                                     size="lg"
+                                                     icon={['fas', 'image']}
+                                                     className="text-white mr-2"
+                                                 />{' '}
+                                                 List Logo <span className="text-red-600">*</span>
+                                             </h2>
+                                             <p className="mt-4 text-white/50 text-sm text-left">
+                                               • Link to a Logo for your Bot List
+                                             </p>
+                                             <input
+                                                 name="listLogo"
+                                                 placeholder="https://cdn.infinitybots.xyz/images/logo.png"
+                                                 value={value.listLogo}
+                                                 onChange={onListLogoUpdate}
+                                                 className="w-full mx-auto mt-4 flex transition duration-200 hover:bg-opacity-50 bg-black bg-opacity-30 text-white focus:text-amber-400 rounded-xl border border-white/10 focus:border-amber-400 focus:outline-none py-4 px-6"
+                                             />
+                                         </div>
+                                         <div className="mt-8 col-span-9 pt-5 lg:pt-0 items-center justify-center mt-6">
+                                             <h2 className="text-white text-2xl text-left">
+                                                 <FontAwesomeIcon
+                                                     size="lg"
+                                                     icon={['fas', 'info-circle']}
+                                                     className="text-white mr-2"
+                                                 />{' '}
+                                                 List Description <span className="text-red-600">*</span>
+                                             </h2>
+                                             <p className="mt-4 text-white/50 text-sm text-left">
+                                               • Description for your Bot List (Supports Markdown and HTML)
+                                             </p>
+                                             <textarea
+                                                 name="listDesc"
+                                                 placeholder="My bot list is a very cool bot list with a ton of features"
+                                                 value={value.listDesc}
+                                                 onChange={onListDescUpdate}
+                                                 className="w-full mx-auto mt-4 flex transition duration-200 hover:bg-opacity-50 bg-black bg-opacity-30 text-white focus:text-amber-400 rounded-xl border border-white/10 focus:border-amber-400 focus:outline-none py-4 px-6"
+                                             />
+                                         </div>
+                                         <div className="mt-8 col-span-9 pt-5 lg:pt-0 items-center justify-center mt-6">
+                                             <h2 className="text-white text-2xl text-left">
+                                                 <FontAwesomeIcon
+                                                     size="lg"
+                                                     icon={['fas', 'fingerprint']}
+                                                     className="text-white mr-2"
+                                                 />{' '}
+                                                 List Owner ID <span className="text-red-600">*</span>
+                                             </h2>
+                                             <p className="mt-4 text-white/50 text-sm text-left">
+                                               • Discord User ID of the Bot List Owner
+                                             </p>
+                                             <input
+                                                 name="listOwner"
+                                                 placeholder="653731677851615233"
+                                                 value={value.listOwner}
+                                                 onChange={onListOwnerUpdate}
+                                                 className="w-full mx-auto mt-4 flex transition duration-200 hover:bg-opacity-50 bg-black bg-opacity-30 text-white focus:text-amber-400 rounded-xl border border-white/10 focus:border-amber-400 focus:outline-none py-4 px-6"
+                                             />
+                                         </div>
+                                         <div className="mt-8 col-span-9 pt-5 lg:pt-0 items-center justify-center mt-6">
+                                             <h2 className="text-white text-2xl text-left">
+                                                 <FontAwesomeIcon
+                                                     size="lg"
+                                                     icon={['fas', 'fingerprint']}
+                                                     className="text-white mr-2"
+                                                 />{' '}
+                                                 Does your bot list have a review system? <span className="text-red-600">*</span>
+                                             </h2>
+                                             <p className="mt-4 text-white/50 text-sm text-left">
+                                               • Please explain with as much detail as possible.
+                                             </p>
+                                             <textarea
+                                                 name="revSystem"
+                                                 placeholder="My bot list has a custom review system that works by doing..."
+                                                 value={value.revSystem}
+                                                 onChange={onRevSystemUpdate}
+                                                 className="w-full mx-auto mt-4 flex transition duration-200 hover:bg-opacity-50 bg-black bg-opacity-30 text-white focus:text-amber-400 rounded-xl border border-white/10 focus:border-amber-400 focus:outline-none py-4 px-6"
+                                             />
+                                         </div>
+                                         <div className="mt-8 col-span-9 pt-5 lg:pt-0 items-center justify-center mt-6">
+                                             <h2 className="text-white text-2xl text-left">
+                                                 <FontAwesomeIcon
+                                                     size="lg"
+                                                     icon={['fas', 'id-badge']}
+                                                     className="text-white mr-2"
+                                                 />{' '}
+                                                 How old is your Bot List? <span className="text-red-600">*</span>
+                                             </h2>
+                                             <p className="mt-4 text-white/50 text-sm text-left">
+                                               • Example: 12 Months old.
+                                             </p>
+                                             <input
+                                                 name="listAge"
+                                                 placeholder="My bot list is about 12 months old"
+                                                 value={value.listAge}
+                                                 onChange={onListAgeUpdate}
+                                                 className="w-full mx-auto mt-4 flex transition duration-200 hover:bg-opacity-50 bg-black bg-opacity-30 text-white focus:text-amber-400 rounded-xl border border-white/10 focus:border-amber-400 focus:outline-none py-4 px-6"
+                                             />
+                                         </div>
+                                         <div className="mt-8 col-span-9 pt-5 lg:pt-0 items-center justify-center mt-6">
+                                             <h2 className="text-white text-2xl text-left">
+                                                 <FontAwesomeIcon
+                                                     size="lg"
+                                                     icon={['fas', 'code']}
+                                                     className="text-white mr-2"
+                                                 />{' '}
+                                                 What is your Bot List made with? <span className="text-red-600">*</span>
+                                             </h2>
+                                             <p className="mt-4 text-white/50 text-sm text-left">
+                                               • Javascript, Typescript, Python etc
+                                             </p>
+                                             <input
+                                                 name="listLang"
+                                                 placeholder="Javascript"
+                                                 value={value.listLang}
+                                                 onChange={onListLangUpdate}
+                                                 className="w-full mx-auto mt-4 flex transition duration-200 hover:bg-opacity-50 bg-black bg-opacity-30 text-white focus:text-amber-400 rounded-xl border border-white/10 focus:border-amber-400 focus:outline-none py-4 px-6"
+                                             />
+                                         </div>
+                                         <div className="mt-8 col-span-9 pt-5 lg:pt-0 items-center justify-center mt-6">
+                                             <h2 className="text-white text-2xl text-left">
+                                                 <FontAwesomeIcon
+                                                     size="lg"
+                                                     icon={['fas', 'download']}
+                                                     className="text-white mr-2"
+                                                 />{' '}
+                                                 Is your Bot List a Fork/Clone? <span className="text-red-600">*</span>
+                                             </h2>
+                                             <p className="mt-4 text-white/50 text-sm text-left">
+                                               • If yes please tell us what list and what you have changed!
+                                             </p>
+                                             <textarea
+                                                 name="forkedList"
+                                                 placeholder="Yes its a fork of Infinity Bots but i have added......"
+                                                 value={value.forkedList}
+                                                 onChange={onForkedListUpdate}
+                                                 className="w-full mx-auto mt-4 flex transition duration-200 hover:bg-opacity-50 bg-black bg-opacity-30 text-white focus:text-amber-400 rounded-xl border border-white/10 focus:border-amber-400 focus:outline-none py-4 px-6"
+                                             />
+                                         </div>
+                                         <div className="mt-8 col-span-9 pt-5 lg:pt-0 items-center justify-center mt-6">
+                                             <h2 className="text-white text-2xl text-left">
+                                                 <FontAwesomeIcon
+                                                     size="lg"
+                                                     icon={['fas', 'code']}
+                                                     className="text-white mr-2"
+                                                 />{' '}
+                                                 Are you prepared to make changes to your code? <span className="text-red-600">*</span>
+                                             </h2>
+                                             <p className="mt-4 text-white/50 text-sm text-left">
+                                               • Changes will need to be made to your bot list to support our API!
+                                             </p>
+                                             <input
+                                                 name="apiChanges"
+                                                 placeholder="Yes i am ready to implement the metro api."
+                                                 value={value.apiChanges}
+                                                 onChange={onApiChangeUpdate}
+                                                 className="w-full mx-auto mt-4 flex transition duration-200 hover:bg-opacity-50 bg-black bg-opacity-30 text-white focus:text-amber-400 rounded-xl border border-white/10 focus:border-amber-400 focus:outline-none py-4 px-6"
+                                             />
+                                         </div>
+                                         <div className="flex pt-2 mx-auto left-0 mt-8">
                                             <button
 									           type="submit"
 									           className="inline-flex items-center py-2 px-8 space-x-2 text-lg bg-amber-600 hover:bg-amber-800 selection:rounded-md focus:outline-none focus:ring focus:ring-indigo-600"
 								            >
-                                                <span>💻 Submit List</span>
+                                                <span>Submit List</span>
 								            </button>
 							             </div>
                                      </form>

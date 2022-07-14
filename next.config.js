@@ -21,7 +21,11 @@ module.exports = withPWA({
     APP_URI: process.env.APP_URI,
     JWT_SECRET: process.env.JWT_SECRET,
     LOGOUT_PASS: process.env.LOGOUT_PASS,
-    API_AUTH: process.env.API_AUTH
+    API_AUTH: process.env.API_AUTH,
+    APPLY_HOOK_ID: process.env.APPLY_HOOK_ID,
+    APPLY_HOOK_KEY: process.env.APPLY_HOOK_KEY,
+    MONGO: process.env.MONGO,
+    CRYPTR: process.env.CRYPTR
   },
   async redirects() {
     return [

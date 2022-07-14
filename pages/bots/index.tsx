@@ -72,7 +72,7 @@ export default function Bots(props: Props) {
                     </Link>
                     <Link
                       className="mt-4 mb-4"
-                      href={"https://forms.gle/YQDzs8TKcGQg5p7x8"}
+                      href={"/lists/apply"}
                     >
                       <a
                         target="_blank"

@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { SWRConfig } from "swr";
 import Script from "next/script";
 import Document from "next/document";
+import { Toaster } from "react-hot-toast"
 
 import Header from "../components/Static/Header";
 import Footer from "../components/Static/Footer";
@@ -76,6 +77,15 @@ export default function MetroApp({ Component, pageProps }) {
                 position="bottom-right"
                 transition={Slide}
               />
+              <Toaster
+				         toastOptions={{
+					          style: {
+						           background: '#172033',
+						           color: '#fff',
+					          },
+				         }}
+				         position="bottom-left"
+			        />
               <Cookies />
               <Footer $={locale} />
             </main>
