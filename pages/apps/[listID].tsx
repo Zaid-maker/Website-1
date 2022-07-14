@@ -47,10 +47,10 @@ import { config } from '@/root/utils/authConfig';
                          <main className="px-4 mx-auto mt-10 w-full max-w-7xl sm:px-6 sm:mt-12 md:mt-16 lg:px-8 lg:mt-20 xl:mt-28">
                              <div className="text-center">
                                  <h1 className="inline text-4xl font-extrabold tracking-tight text-slate-300 sm:text-5xl md:text-6xl">
-                                     Submit a Bot List
+                                   {list?.listName}
                                  </h1>
                                  <p className="mt-3 text-base text-white sm:mx-auto sm:mt-5 sm:max-w-xl sm:text-lg md:mt-5 md:text-xl lg:mx-0">
-                                     Thank you for your interest in Metro Reviews. You can submit an application below.
+                                     Below is the application for the bot list. Please make sure all info is accurate and correct.
                                  </p>
                              </div>
                          </main>
