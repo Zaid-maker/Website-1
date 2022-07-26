@@ -50,7 +50,7 @@ module.exports = {
         },
       },
     },
-    footerCredits: "© 2022 Metro Reviews & Award Development",
+    footerCredits: "© 2022 Infinity Development",
   },
 
   index: {
