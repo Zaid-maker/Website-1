@@ -50,7 +50,7 @@ module.exports = {
         },
       },
     },
-    footerCredits: "© 2022 Infinity Development",
+    footerCredits: "© 2022 Infinity Development & Award",
   },
 
   index: {
