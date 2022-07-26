@@ -32,7 +32,7 @@ export const NavItems = [
     name: "Bots",
     icon: "fas fa-robot",
     activeIcon: "fas fa-robot",
-    href: "/bots",
+    href: "/soon",
   },
   {
     link: true,
