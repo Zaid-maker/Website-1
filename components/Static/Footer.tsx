@@ -130,7 +130,7 @@ const Footer = ({ $ }) => {
                       </Link>
                     </li>
                     <li>
-                      <Link href={"/bots"}>
+                      <Link href={"/soon"}>
                         <a className="text-white hover:text-amber-500">
                           <FontAwesomeIcon
                             icon={["fas", "robot"]}
