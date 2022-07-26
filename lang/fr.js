@@ -50,7 +50,7 @@ module.exports = {
         },
       },
     },
-    footerCredits: "Fait avec ❤️ par Toxic Dev#5936 & Rootspring#6701",
+    footerCredits: "© 2022 Infinity Development",
   },
 
   index: {
