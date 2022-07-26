@@ -257,7 +257,6 @@ const Footer = ({ $ }) => {
           </div>
           <div className="pt-8 mt-12 border-t border-slate-850">
             <p className="mt-4 font-semibold text-center text-white">
-              {$.footer.footerCredits}
               <Link href={"https://infinitydev.team/"}>
                 <a className="text-white hover:text-amber-500">
                   {$.footer.footerCredits}
