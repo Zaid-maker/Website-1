@@ -65,7 +65,7 @@ module.exports = {
     features: {
       title: 'Why choose <span class="text-amber-500 font-bold">Metro?</span>',
       description:
-        "We provide a Simple API that allows all our Supported List to easily Manage, Approve and Deny Bots all within our Dedicated Community of Bot List Staff. Thus essentially giving you and your Staff Team more time to focus on Server Management, Development and Moderation",
+        "We understand the struggle of running a bot list and dealing with its queue processes and anted to provide all bot lists and bot list owners with a simple, reliable and user friendly olution that can be merged and added to any framework or language with ease. We did our research nd came to conclusion that this can best be achieved through a dedicated RESTful API",
       items: [
         {
           icon: "fas fa-check",
